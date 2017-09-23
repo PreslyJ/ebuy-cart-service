@@ -8,8 +8,8 @@ import com.kidz.model.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Long>{
 	
-	List<Product> findAllByOrderByProductViewsDesc();
+	/*List<Product> findAllByOrderByProductViewsDesc();
 	
 	List<Product> findAllByProductCategory(Category category);
-	
+	*/
 }

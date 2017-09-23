@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -28,7 +31,6 @@ public class CustomerOrder implements Serializable{
 
     private double orderTotalPrice;
     
-    @Column(columnDefinition="DATETIME")
     private Date orderDate;
     
     @OneToOne
@@ -41,6 +43,7 @@ public class CustomerOrder implements Serializable{
     private Customer customer;
 
     @OneToMany(mappedBy = "customerOrder", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(value=FetchMode.SUBSELECT)
     private List<CustomerOrderItem> customerOrderItems;
 
     public Long getCustomerOrderId() {

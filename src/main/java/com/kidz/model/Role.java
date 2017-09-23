@@ -13,7 +13,7 @@ public class Role {
 
 	@Id
 	@GeneratedValue
-	private Long roleId;
+	private Long id;
 	private String authority;
 	private String email;
 
@@ -21,13 +21,6 @@ public class Role {
 	@JoinColumn(name = "customerId")
 	private Customer customer;
 
-	public Long getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Long roleId) {
-		this.roleId = roleId;
-	}
 
 	public String getAuthority() {
 		return authority;

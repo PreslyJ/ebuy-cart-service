@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,11 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class SubCategory implements Serializable{
@@ -31,19 +30,20 @@ public class SubCategory implements Serializable{
 	
     @NotEmpty(message = "The name must not be null")
     @Length(max = 255, message = "The field must be less than 255 characters")
+    @Column(unique=true)
 	private String name;
 	
     @Lob
-	private String decsription;
+	private String description;
 	
     @ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.MERGE)
 	@JoinColumn
-	@JsonBackReference	
+	@JsonIgnoreProperties("subCategories")
 	private Category category;
 
     @OneToMany(cascade=CascadeType.MERGE,fetch=FetchType.EAGER,mappedBy="subCategory")
-    @JsonManagedReference
-	private List<Product> products=new ArrayList<Product>();
+    @JsonIgnoreProperties("subCategory")
+    private List<Product> products=new ArrayList<Product>();
 	
 	public Long getId() {
 		return id;
@@ -61,12 +61,12 @@ public class SubCategory implements Serializable{
 		this.name = name;
 	}
 
-	public String getDecsription() {
-		return decsription;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDecsription(String decsription) {
-		this.decsription = decsription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Category getCategory() {

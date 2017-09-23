@@ -3,6 +3,10 @@ package com.kidz.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -16,6 +20,7 @@ public class Cart implements Serializable{
     private Long cartId;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @Fetch(value=FetchMode.SUBSELECT)
     private List<CartItem> cartItems;
 
     @OneToOne

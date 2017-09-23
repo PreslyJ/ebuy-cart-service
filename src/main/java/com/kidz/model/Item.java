@@ -11,8 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Item implements Serializable {
@@ -29,7 +28,7 @@ public class Item implements Serializable {
 	
 	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.MERGE)
 	@JoinColumn
-	@JsonBackReference	
+	@JsonIgnoreProperties("items")
 	private Product product;
 	
 	private String color;

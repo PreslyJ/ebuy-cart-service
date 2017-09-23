@@ -37,7 +37,6 @@ public class Customer implements Serializable {
     @NotEmpty (message = "Name can not be blank")
     private String customerName;
     
-    @Column(columnDefinition="DATETIME")
     private Date registerDate;
 
     private boolean enabled;

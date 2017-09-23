@@ -6,14 +6,16 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.kidz.model.Category;
 import com.kidz.model.Item;
 import com.kidz.model.Product;
@@ -21,7 +23,7 @@ import com.kidz.model.SubCategory;
 import com.kidz.service.CategoryService;
 import com.kidz.service.ProductService;
 
-@Controller
+@RestController
 @RequestMapping("/cart")
 public class CartController {
 	
@@ -128,7 +130,9 @@ public class CartController {
 	
 	@RequestMapping(value="/getAllSubCategories",method=RequestMethod.POST)
 	@CrossOrigin
+
 	public Page<SubCategory> getAllSubCategories(Pageable pageable) {
+				
 
 		return categoryService.getAllSubCategory(pageable,null);
 

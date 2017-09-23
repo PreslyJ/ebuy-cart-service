@@ -24,12 +24,10 @@ public class CustomerServiceImpl implements CustomerService{
     @Autowired
     private CartRepository cartRepository;
     @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
     private CodeService codeService;
 
     public void save(Customer customer) {
-        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+//        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
     	// save or update
     	if(customer.getCustomerId() == null){
     		Cart cart = new Cart();

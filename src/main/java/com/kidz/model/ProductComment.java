@@ -20,7 +20,6 @@ public class ProductComment implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long commentId;
 
-    @Column(columnDefinition = "TEXT")
     private String commentCotents;
 
     private int commentStarts;
@@ -33,7 +32,6 @@ public class ProductComment implements Serializable {
     @JoinColumn(name = "customerId")
     private Customer customer;
 
-    @Column(columnDefinition="DATETIME")
     private Date commentDate;
 
 	public Long getCommentId() {

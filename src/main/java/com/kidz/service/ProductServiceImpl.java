@@ -27,7 +27,8 @@ class ProductServiceImpl implements ProductService{
 	
 	
 	public List<Product> getProductsByCategory(Category category){
-		return productRepository.findAllByProductCategory(category);
+		return null;
+		//return productRepository.findAllByProductCategory(category);
 	}
 	
 	public Page<Product> getAllProducts(Pageable pageable,Map<String, Object> filterMap){

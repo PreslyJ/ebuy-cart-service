@@ -14,12 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
@@ -40,11 +37,11 @@ public class Product implements Serializable{
     
     @ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.MERGE)
 	@JoinColumn
-	@JsonBackReference	
+    @JsonIgnoreProperties("products")
     private SubCategory subCategory;
     
     @OneToMany(cascade=CascadeType.MERGE,fetch=FetchType.EAGER,mappedBy="product")
-    @JsonManagedReference
+    @JsonIgnoreProperties("product")
     private List<Item> items=new ArrayList<Item>();
 
 	public Long getProductId() {

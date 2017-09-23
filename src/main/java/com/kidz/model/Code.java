@@ -17,9 +17,9 @@ public class Code {
     private Long codeId;
 	
 	private String codeStr;
+	
 	private int codeType; // 0:active, 1: reset PW
 	
-	@Column(columnDefinition="DATETIME")
 	private Date codeDate;
 	
 	@ManyToOne

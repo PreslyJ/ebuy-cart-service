@@ -17,11 +17,11 @@ public class EmailSenderServiceImpl implements EmailSenderService{
 
 	@Autowired
 	private CodeService codeService;
-	@Autowired
+/*	@Autowired
 	private MailSender mailSender;
-	@Value("${fromAddress}")
+*/	@Value("${fromAddress:a}")
 	private String fromAddress;
-	@Value("${websiteAddr}")
+	@Value("${websiteAddr:w}")
 	private String websiteAddr;
 	
 	public void sendMail(String toAddress, String subject, String msgBody){
@@ -30,8 +30,8 @@ public class EmailSenderServiceImpl implements EmailSenderService{
 		msg.setTo(toAddress);
 		msg.setSubject(subject);
 		msg.setText(msgBody);
-		mailSender.send(msg);
-	}
+/*		mailSender.send(msg);
+*/	}
 	
 	public void sendActiveCode(Customer customer){
 		List<Code> codes = codeService.findByCodeTypeAndCustomer(0, customer);
