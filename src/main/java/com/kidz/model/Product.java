@@ -3,7 +3,6 @@ package com.kidz.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,14 +25,14 @@ public class Product implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productId; 
+    private Long id; 
     
     @NotEmpty(message = "The name must not be null")
     @Length(max = 255, message = "The field must be less than 255 characters")
     private String name;
     
     @Lob
-    private String productDescription;
+    private String description;
     
     @ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.MERGE)
 	@JoinColumn
@@ -44,12 +43,12 @@ public class Product implements Serializable{
     @JsonIgnoreProperties("product")
     private List<Item> items=new ArrayList<Item>();
 
-	public Long getProductId() {
-		return productId;
+   	public Long getId() {
+		return id;
 	}
 
-	public void setProductId(Long productId) {
-		this.productId = productId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -60,12 +59,12 @@ public class Product implements Serializable{
 		this.name = name;
 	}
 
-	public String getProductDescription() {
-		return productDescription;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setProductDescription(String productDescription) {
-		this.productDescription = productDescription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public SubCategory getSubCategory() {

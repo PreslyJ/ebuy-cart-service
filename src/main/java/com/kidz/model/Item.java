@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -31,8 +33,6 @@ public class Item implements Serializable {
 	@JsonIgnoreProperties("items")
 	private Product product;
 	
-	private String color;
-	
 	private int minAge;
 	
 	private int maxAge;
@@ -47,6 +47,7 @@ public class Item implements Serializable {
 	private String otherProperties;
 	
 	@Lob
+	@JsonIgnore
 	private byte[] image;
 
 	public Long getId() {
@@ -79,14 +80,6 @@ public class Item implements Serializable {
 
 	public void setProduct(Product product) {
 		this.product = product;
-	}
-
-	public String getColor() {
-		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
 	}
 
 	public int getMinAge() {
