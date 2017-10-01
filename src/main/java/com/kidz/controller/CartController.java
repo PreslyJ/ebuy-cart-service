@@ -1,8 +1,16 @@
 package com.kidz.controller;
 
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -174,7 +182,7 @@ public class CartController {
 	
 	@RequestMapping(value = "/uploadItemImage", method = RequestMethod.POST)
 	@CrossOrigin
-	public Map<String,String> singleFileUpload(@RequestParam("file") MultipartFile file,@RequestParam() long itemId) throws IOException {
+	public Map<String,String> uploadItemImage(@RequestParam("file") MultipartFile file,@RequestParam() long itemId) throws IOException {
 
 		Map<String,String> result=new HashMap();
 		
@@ -203,8 +211,40 @@ public class CartController {
 		
 		 Item item=productService.getItemById(itemId);
 		 
-		 return item.getImage();
+		 return scale(item.getImage(), 256, 256);
 		 
 	}
 	
+	@RequestMapping(value="/filterItems",method=RequestMethod.POST)
+	@CrossOrigin
+	public Page<Item> filterItems(Pageable pageable,@RequestBody Map<String, Object> filterMap) {
+
+		return productService.getAllItems(pageable,filterMap);
+
+	}
+	
+	public byte[] scale(byte[] fileData, int width, int height) {
+        ByteArrayInputStream in = new ByteArrayInputStream(fileData);
+        try {
+            BufferedImage img = ImageIO.read(in);
+            if(height == 0) {
+                height = (width * img.getHeight())/ img.getWidth(); 
+            }
+            if(width == 0) {
+                width = (height * img.getWidth())/ img.getHeight();
+            }
+            Image scaledImage = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            BufferedImage imageBuff = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+            imageBuff.getGraphics().drawImage(scaledImage, 0, 0, new Color(0,0,0), null);
+
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+            ImageIO.write(imageBuff, "jpg", buffer);
+
+            return buffer.toByteArray();
+        } catch (IOException e) {
+        	e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }

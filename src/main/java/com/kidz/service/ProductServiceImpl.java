@@ -12,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kidz.model.Category;
 import com.kidz.model.Item;
 import com.kidz.model.Product;
+import com.kidz.model.QItem;
 import com.kidz.repository.ItemRepository;
 import com.kidz.repository.ProductRepository;
+import com.querydsl.core.BooleanBuilder;
 
 @Service
 @Transactional
@@ -48,7 +50,24 @@ class ProductServiceImpl implements ProductService{
 
 	@Override
 	public Page<Item> getAllItems(Pageable pageable, Map<String, Object> filterMap) {
-		return itemRepository.findAll(pageable);
+		if(filterMap==null)
+			return itemRepository.findAll(pageable);
+		
+		boolean isRecomended=filterMap.get("isRecomended")!=null?Boolean.parseBoolean( filterMap.get("isRecomended").toString()):false;
+		boolean isFeatured=filterMap.get("isFeatured")!=null?Boolean.parseBoolean( filterMap.get("isFeatured").toString()):false;
+		
+		QItem item=QItem.item;
+		
+		BooleanBuilder whereClause = new BooleanBuilder();
+
+		if(filterMap.get("isFeatured")!=null)
+			whereClause.and(item.isFeatured.eq(isFeatured));
+		
+		if(filterMap.get("isRecomended")!=null)
+			whereClause.and(item.isRecomended.eq(isRecomended));
+		
+		return itemRepository.findAll(whereClause,pageable);
+		
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.kidz.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.ColumnDefault;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -50,6 +53,19 @@ public class Item implements Serializable {
 	@JsonIgnore
 	private byte[] image;
 
+	@ColumnDefault(value="false")
+	private boolean isRecomended=false;
+	
+	@ColumnDefault(value="false")
+	private boolean isFeatured=false;
+	
+	private Date lupDate;
+	
+	public Item(){
+		this.lupDate=new Date();
+	}
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -137,5 +153,29 @@ public class Item implements Serializable {
 	public void setImage(byte[] image) {
 		this.image = image;
 	}
-		
+
+	public boolean isRecomended() {
+		return isRecomended;
+	}
+
+	public void setRecomended(boolean isRecomended) {
+		this.isRecomended = isRecomended;
+	}
+
+	public boolean isFeatured() {
+		return isFeatured;
+	}
+
+	public void setFeatured(boolean isFeatured) {
+		this.isFeatured = isFeatured;
+	}
+
+	public Date getLupDate() {
+		return lupDate;
+	}
+
+	public void setLupDate(Date lupDate) {
+		this.lupDate = lupDate;
+	}
+	
 }
