@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.kidz.cart.model.Customer;
+
 @Entity
 public class ShippingAddress implements Serializable {
 

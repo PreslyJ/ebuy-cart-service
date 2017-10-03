@@ -7,6 +7,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.kidz.cart.model.Customer;
+
 @Entity
 @Table(name = "role")
 public class Role {

@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.kidz.cart.model.Customer;
+
 @Entity
 public class ProductComment implements Serializable {
 

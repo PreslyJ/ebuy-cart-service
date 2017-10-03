@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.kidz.cart.model.Customer;
 import com.kidz.model.Cart;
 import com.kidz.model.Code;
-import com.kidz.model.Customer;
 import com.kidz.model.Role;
 import com.kidz.repository.CartRepository;
 import com.kidz.repository.CustomerRepository;

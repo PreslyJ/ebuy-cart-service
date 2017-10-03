@@ -2,8 +2,8 @@ package com.kidz.service;
 
 import java.util.List;
 
+import com.kidz.cart.model.Customer;
 import com.kidz.model.Code;
-import com.kidz.model.Customer;
 
 public interface CodeService {
 	

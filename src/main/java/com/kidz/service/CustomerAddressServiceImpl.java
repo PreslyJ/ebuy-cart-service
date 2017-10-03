@@ -8,7 +8,7 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kidz.model.Customer;
+import com.kidz.cart.model.Customer;
 import com.kidz.model.ShippingAddress;
 import com.kidz.repository.ShippingAddressRepository;
 

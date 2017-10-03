@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kidz.model.Customer;
+import com.kidz.cart.model.Customer;
 import com.kidz.model.Role;
 import com.kidz.repository.CustomerRepository;
 

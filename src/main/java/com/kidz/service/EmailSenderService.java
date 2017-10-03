@@ -1,6 +1,6 @@
 package com.kidz.service;
 
-import com.kidz.model.Customer;
+import com.kidz.cart.model.Customer;
 
 public interface EmailSenderService {
 

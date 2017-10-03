@@ -1,6 +1,7 @@
 package com.kidz.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kidz.cart.model.Customer;
 
 import javax.persistence.*;
 

@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.kidz.cart.model.Customer;
 import com.kidz.model.Cart;
 import com.kidz.model.CartItem;
-import com.kidz.model.Customer;
 import com.kidz.model.Product;
 import com.kidz.repository.CartItemRepository;
 import com.kidz.repository.CartRepository;

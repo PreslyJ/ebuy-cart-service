@@ -7,9 +7,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kidz.cart.model.Customer;
 import com.kidz.model.Cart;
 import com.kidz.model.CartItem;
-import com.kidz.model.Customer;
 import com.kidz.model.CustomerOrder;
 import com.kidz.model.CustomerOrderItem;
 import com.kidz.model.CustomerOrderShippingAddress;
