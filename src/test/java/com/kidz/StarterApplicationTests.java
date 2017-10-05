@@ -22,7 +22,7 @@ public class StarterApplicationTests {
 	
 	@Test
 	public void contextLoads() {
-		System.out.println(loginService.getAuthToken());
+		//System.out.println(loginService.getAuthToken());
 	}
 
 }
