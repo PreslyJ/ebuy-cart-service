@@ -8,15 +8,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
-
-import com.kidz.cart.model.Code;
 import com.kidz.cart.model.Customer;
 
 @Service
 public class EmailSenderServiceImpl implements EmailSenderService{
 
-	@Autowired
-	private CodeService codeService;
 /*	@Autowired
 	private MailSender mailSender;
 */	@Value("${fromAddress:a}")
@@ -33,7 +29,7 @@ public class EmailSenderServiceImpl implements EmailSenderService{
 /*		mailSender.send(msg);
 */	}
 	
-	public void sendActiveCode(Customer customer){
+/*	public void sendActiveCode(Customer customer){
 		List<Code> codes = codeService.findByCodeTypeAndCustomer(0, customer);
 		String msgBody = "Click or copy this link to the browser -> http://" + websiteAddr + "/rg/";
 		for(Code code : codes){
@@ -53,5 +49,5 @@ public class EmailSenderServiceImpl implements EmailSenderService{
 		codeService.save(code);
 		String msgBody = websiteAddr + "/rp/" + code.getCodeStr();
 		sendMail(customer.getEmail(), "Reset Your Passowrd", msgBody);
-	}
+	}*/
 }

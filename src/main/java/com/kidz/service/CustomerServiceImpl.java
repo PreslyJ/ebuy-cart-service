@@ -1,19 +1,12 @@
 package com.kidz.service;
 
-import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.kidz.cart.model.Cart;
-import com.kidz.cart.model.Code;
 import com.kidz.cart.model.Customer;
-import com.kidz.cart.model.Role;
 import com.kidz.repository.CartRepository;
 import com.kidz.repository.CustomerRepository;
-import com.kidz.repository.RoleRepository;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
@@ -27,7 +20,7 @@ public class CustomerServiceImpl implements CustomerService{
     public void save(Customer customer) {
 
     	// save or update
-    	if(customer.getId() == null || customer.getId()<1){
+    	if(customer.getId()<1){
     		Cart cart = new Cart();
         	
     		customerRepository.save(customer);
@@ -38,7 +31,6 @@ public class CustomerServiceImpl implements CustomerService{
         	
         	// update cartId in Customer
         	customer.setCart(cart);
-        	customer.setEnabled(true);
         	
         	customerRepository.save(customer);
         	

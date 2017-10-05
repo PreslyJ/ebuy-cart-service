@@ -13,12 +13,10 @@ import com.kidz.cart.model.Customer;
 import com.kidz.cart.model.CustomerOrder;
 import com.kidz.cart.model.CustomerOrderItem;
 import com.kidz.cart.model.CustomerOrderShippingAddress;
-import com.kidz.cart.model.ShippingAddress;
 import com.kidz.repository.CartItemRepository;
 import com.kidz.repository.CustomerOrderItemRepository;
 import com.kidz.repository.CustomerOrderRepository;
 import com.kidz.repository.CustomerOrderShippingAddressRepository;
-import com.kidz.repository.ShippingAddressRepository;
 
 @Service
 public class CustomerOrderServiceImpl implements CustomerOrderService{
@@ -29,8 +27,6 @@ public class CustomerOrderServiceImpl implements CustomerOrderService{
     private CustomerOrderRepository customerOrderRepository;
     @Autowired
     private CustomerOrderShippingAddressRepository customerOrderShippingAddressRepository;
-    @Autowired
-    private ShippingAddressRepository shippingAddressRepository;
     @Autowired
     private CustomerOrderItemRepository customerOrderItemRepository;
     @Autowired
@@ -53,15 +49,6 @@ public class CustomerOrderServiceImpl implements CustomerOrderService{
 		if(customerOrderShippingAddress == null || customerOrder == null || cart == null){
 			throw new IOException();
 		}
-		// initiate customerOrderShippingAddress
-		ShippingAddress shippingAddress = shippingAddressRepository.findOne(customerOrderShippingAddress.getOriginalShippingAddressId());
-		customerOrderShippingAddress.setAddress(shippingAddress.getAddress());
-		customerOrderShippingAddress.setCity(shippingAddress.getCity());
-		customerOrderShippingAddress.setCountry(shippingAddress.getCountry());
-		customerOrderShippingAddress.setFullName(shippingAddress.getFullName());
-		customerOrderShippingAddress.setPhoneNumber(shippingAddress.getPhoneNumber());
-		customerOrderShippingAddress.setState(shippingAddress.getState());
-		customerOrderShippingAddress.setZipCode(shippingAddress.getZipCode());
 		
 		// initiate customer order
 		customerOrder.setCustomer(cart.getCustomer());
