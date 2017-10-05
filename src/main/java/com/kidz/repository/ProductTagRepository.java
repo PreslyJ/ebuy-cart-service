@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
-import com.kidz.model.Category;
-import com.kidz.model.ProductTag;
+import com.kidz.cart.model.Category;
+import com.kidz.cart.model.ProductTag;
 
 public interface ProductTagRepository extends CrudRepository<ProductTag, Long>{
 	

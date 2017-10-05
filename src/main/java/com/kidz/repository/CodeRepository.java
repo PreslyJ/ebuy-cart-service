@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
+import com.kidz.cart.model.Code;
 import com.kidz.cart.model.Customer;
-import com.kidz.model.Code;
 
 public interface CodeRepository extends CrudRepository<Code, Long>{
 	

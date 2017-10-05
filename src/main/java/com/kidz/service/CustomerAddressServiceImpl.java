@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kidz.cart.model.Customer;
-import com.kidz.model.ShippingAddress;
+import com.kidz.cart.model.ShippingAddress;
 import com.kidz.repository.ShippingAddressRepository;
 
 @Service
@@ -29,15 +29,15 @@ public class CustomerAddressServiceImpl implements CustomerAddressService{
 	public void addShippingAddressObject(Object customerId, ShippingAddress shippingAddress){
 		Customer customer = customerService.findOne((Long)customerId);
 		// if there is no default shipping address, then set it up
-		shippingAddress.setIsDefault(true);
-		Hibernate.initialize(customer.getShippingAddresses());
+		//shippingAddress.setIsDefault(true);
+/*		Hibernate.initialize(customer.getShippingAddresses());
 		for(ShippingAddress shippingAddress_ : customer.getShippingAddresses()){
 			if(shippingAddress_.getIsDefault()){
 				shippingAddress.setIsDefault(false);
 				break;
 			}
 		}
-		shippingAddress.setCustomer(customer); 
+*/		shippingAddress.setCustomer(customer); 
 		shippingAddressRepository.save(shippingAddress);
 	}
 }

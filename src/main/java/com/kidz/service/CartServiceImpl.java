@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kidz.model.Cart;
-import com.kidz.model.CartItem;
+import com.kidz.cart.model.Cart;
+import com.kidz.cart.model.CartItem;
 import com.kidz.repository.CartItemRepository;
 import com.kidz.repository.CartRepository;
 

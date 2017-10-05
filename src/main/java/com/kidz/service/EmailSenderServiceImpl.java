@@ -9,8 +9,8 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
+import com.kidz.cart.model.Code;
 import com.kidz.cart.model.Customer;
-import com.kidz.model.Code;
 
 @Service
 public class EmailSenderServiceImpl implements EmailSenderService{

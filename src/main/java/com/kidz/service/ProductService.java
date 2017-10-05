@@ -5,8 +5,8 @@ import java.util.Map;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.kidz.model.Item;
-import com.kidz.model.Product;
+import com.kidz.cart.model.Item;
+import com.kidz.cart.model.Product;
 
 public interface ProductService {
 	

@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kidz.cart.model.Cart;
+import com.kidz.cart.model.CartItem;
 import com.kidz.cart.model.Customer;
-import com.kidz.model.Cart;
-import com.kidz.model.CartItem;
-import com.kidz.model.Product;
+import com.kidz.cart.model.Product;
 import com.kidz.repository.CartItemRepository;
 import com.kidz.repository.CartRepository;
 import com.kidz.repository.CustomerRepository;
@@ -75,7 +75,6 @@ public class CartResources {
             }
             
             CartItem cartItem = new CartItem();
-            cartItem.setProduct(product);
             cartItem.setQuantity(quantity);
         //    cartItem.setTotalPriceDouble(product.getProductPrice()*cartItem.getQuantity());
             cartItem.setCart(cart);

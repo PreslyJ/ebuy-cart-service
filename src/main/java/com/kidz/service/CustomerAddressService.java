@@ -2,7 +2,7 @@ package com.kidz.service;
 
 import java.util.List;
 
-import com.kidz.model.ShippingAddress;
+import com.kidz.cart.model.ShippingAddress;
 
 public interface CustomerAddressService {
 	

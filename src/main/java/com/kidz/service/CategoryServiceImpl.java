@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.kidz.model.Category;
-import com.kidz.model.SubCategory;
+
+import com.kidz.cart.model.Category;
+import com.kidz.cart.model.SubCategory;
 import com.kidz.repository.CategoryRepository;
 import com.kidz.repository.SubCategoryRepository;
 

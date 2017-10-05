@@ -6,16 +6,12 @@ import com.kidz.cart.model.Customer;
 
 public interface CustomerService {
 	
-	Customer findOne(Long customerId);
+	Customer getCustomerById(Long customerId);
 	
 	void save(Customer customer);
-	
-	void activeAccount(String codeStr);
-	
-	Customer findByEmail(String email);
-	
-	boolean hasRole(String role, Customer customer);
-	
+		
+	Customer getCustomerByEmail(String email);
+		
 	List<Customer> getAllCustomer();
 	
 	void delete(Long customerId);

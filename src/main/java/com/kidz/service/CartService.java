@@ -2,7 +2,7 @@ package com.kidz.service;
 
 import java.io.IOException;
 
-import com.kidz.model.Cart;
+import com.kidz.cart.model.Cart;
 
 public interface CartService {
 	

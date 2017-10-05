@@ -3,10 +3,10 @@ package com.kidz.service;
 import java.io.IOException;
 import java.util.List;
 
+import com.kidz.cart.model.Cart;
 import com.kidz.cart.model.Customer;
-import com.kidz.model.Cart;
-import com.kidz.model.CustomerOrder;
-import com.kidz.model.CustomerOrderShippingAddress;
+import com.kidz.cart.model.CustomerOrder;
+import com.kidz.cart.model.CustomerOrderShippingAddress;
 
 public interface CustomerOrderService {
 	

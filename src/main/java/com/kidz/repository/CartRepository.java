@@ -4,7 +4,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.kidz.model.Cart;
+import com.kidz.cart.model.Cart;
 
 @Transactional
 public interface CartRepository extends CrudRepository<Cart, Long>{

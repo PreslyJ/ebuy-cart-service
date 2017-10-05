@@ -24,12 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.kidz.model.Category;
-import com.kidz.model.Item;
-import com.kidz.model.Product;
-import com.kidz.model.SubCategory;
+import com.kidz.cart.model.Category;
+import com.kidz.cart.model.Item;
+import com.kidz.cart.model.Product;
+import com.kidz.cart.model.SubCategory;
 import com.kidz.service.CategoryService;
 import com.kidz.service.ProductService;
 

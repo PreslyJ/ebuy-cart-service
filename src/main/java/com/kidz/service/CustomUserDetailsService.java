@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kidz.cart.model.Customer;
-import com.kidz.model.Role;
+import com.kidz.cart.model.Role;
 import com.kidz.repository.CustomerRepository;
 
 @Service("customUserDetailsService")

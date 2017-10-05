@@ -9,10 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.kidz.model.Category;
-import com.kidz.model.Item;
-import com.kidz.model.Product;
-import com.kidz.model.QItem;
+import com.kidz.cart.model.Category;
+import com.kidz.cart.model.Item;
+import com.kidz.cart.model.Product;
+import com.kidz.cart.model.QItem;
 import com.kidz.repository.ItemRepository;
 import com.kidz.repository.ProductRepository;
 import com.querydsl.core.BooleanBuilder;

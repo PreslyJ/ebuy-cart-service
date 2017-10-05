@@ -5,8 +5,8 @@ import java.util.Map;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.kidz.model.Category;
-import com.kidz.model.SubCategory;
+import com.kidz.cart.model.Category;
+import com.kidz.cart.model.SubCategory;
 
 public interface CategoryService {
 	

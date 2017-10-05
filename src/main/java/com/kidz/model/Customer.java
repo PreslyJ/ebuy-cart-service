@@ -41,7 +41,7 @@ public class Customer implements Serializable {
 
     private boolean enabled;
 
-    @OneToOne
+/*    @OneToOne
     @JoinColumn(name = "cartId")
     @JsonIgnore
     private Cart cart;
@@ -145,5 +145,5 @@ public class Customer implements Serializable {
 	public void setCodes(List<Code> codes) {
 		this.codes = codes;
 	}
-
+*/
 }
