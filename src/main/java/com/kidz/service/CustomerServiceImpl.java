@@ -2,12 +2,16 @@ package com.kidz.service;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.kidz.cart.model.Cart;
 import com.kidz.cart.model.Customer;
 import com.kidz.repository.CartRepository;
 import com.kidz.repository.CustomerRepository;
 
+@Transactional 
 @Service
 public class CustomerServiceImpl implements CustomerService{
 	
@@ -21,8 +25,11 @@ public class CustomerServiceImpl implements CustomerService{
 
     	// save or update
     	if(customer.getId()<1){
+    	
     		Cart cart = new Cart();
         	
+    		customer.getAccount().setPassword(new BCryptPasswordEncoder().encode(customer.getAccount().getPassword()));
+    		
     		customerRepository.save(customer);
         	
     		// save cart

@@ -3,6 +3,7 @@ package com.kidz.service;
 import java.io.IOException;
 
 import com.kidz.cart.model.Cart;
+import com.kidz.cart.model.CartItem;
 
 public interface CartService {
 	
@@ -11,4 +12,7 @@ public interface CartService {
 	void emptyCart(Cart cart);
 	
 	void save(Cart cart);
+	
+	void saveCartItem(CartItem cartItem);
+	
 }

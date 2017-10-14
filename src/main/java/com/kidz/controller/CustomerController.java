@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.kidz.cart.model.Customer;
+import com.kidz.login.model.Account;
 import com.kidz.rpc.LoginService;
 import com.kidz.service.CustomerService;
 
@@ -31,8 +31,11 @@ public class CustomerController {
 	@RequestMapping(value="/saveCustomer",method=RequestMethod.PUT)
 	@CrossOrigin
 	public Customer saveCustomer(@RequestBody Customer customer) {
-
+		
+	if(customer.getEmail()!=null && customer.getFirstName()!=null && customer.getAccount().getPassword()!=null && !customer.getEmail().equals(""))	
 		customerService.save(customer);
+	else
+		System.out.println("noooooooooooooo");
 		
 		return customer;		
 	}
@@ -62,25 +65,18 @@ public class CustomerController {
 	}
 	
 	
-	@ModelAttribute
 	@CrossOrigin
 	@PostMapping("/login")
-	public boolean  redirectToTarget(@ModelAttribute Customer customer,HttpServletResponse response){
+	public String  redirectToTarget(@RequestBody Account account,HttpServletResponse response){
 		
-		if(!loginService.authenticateUser(customer.getAccount()))
-			return false;
+		if(!loginService.authenticateUser(account))
+			return null;
 		
-		customer=customerService.getCustomerByEmail(customer.getEmail());		
+		Customer customer=customerService.getCustomerByEmail(account.getUsername());		
 		
 		String str=customer.getId()+":"+customer.getCart().getId()+":"+customer.getEmail();
-					
-		Cookie cookie = new Cookie("ebuy", str);
-		cookie.setHttpOnly(true);
-   
-		response.addCookie(cookie);
-	//	response.setHeader("Location", "");
-	
-	    return true;
+						
+		return str;
 
 	}
 

@@ -24,12 +24,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.kidz.cart.model.CartItem;
 import com.kidz.cart.model.Category;
+import com.kidz.cart.model.Customer;
 import com.kidz.cart.model.Item;
 import com.kidz.cart.model.Product;
 import com.kidz.cart.model.SubCategory;
+import com.kidz.service.CartService;
 import com.kidz.service.CategoryService;
+import com.kidz.service.CustomerService;
 import com.kidz.service.ProductService;
+
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Position;
+import net.coobird.thumbnailator.geometry.Positions;
 
 @RestController
 @RequestMapping("/cart")
@@ -40,6 +49,12 @@ public class CartController {
 	
 	@Autowired
 	CategoryService categoryService; 
+	
+	@Autowired
+	CustomerService customerService; 
+	
+	@Autowired
+	CartService cartServive;
 	
 	@RequestMapping(value="/saveProduct",method=RequestMethod.PUT)
 	@CrossOrigin
@@ -138,10 +153,8 @@ public class CartController {
 	
 	@RequestMapping(value="/getAllSubCategories",method=RequestMethod.POST)
 	@CrossOrigin
-
 	public Page<SubCategory> getAllSubCategories(Pageable pageable) {
 				
-
 		return categoryService.getAllSubCategory(pageable,null);
 
 	}
@@ -182,7 +195,7 @@ public class CartController {
 	@CrossOrigin
 	public Map<String,String> uploadItemImage(@RequestParam("file") MultipartFile file,@RequestParam() long itemId) throws IOException {
 
-		Map<String,String> result=new HashMap();
+		Map<String,String> result=new HashMap<String, String>();
 		
 		if (file.isEmpty()){ 		
 			result.put("message","Please select a image to upload");
@@ -209,7 +222,7 @@ public class CartController {
 		
 		 Item item=productService.getItemById(itemId);
 		 
-		 return scale(item.getImage(), 256, 256);
+		 return scale(item.getImage(), 180, 200);
 		 
 	}
 	
@@ -221,7 +234,31 @@ public class CartController {
 
 	}
 	
-	public byte[] scale(byte[] fileData, int width, int height) {
+	
+	@RequestMapping(value="/addToCart",method=RequestMethod.POST)
+	@CrossOrigin
+	public void addTocart(Pageable pageable,@RequestBody Map<String, Object> reqMap) {
+
+		long customerId=reqMap.get("customerId")!=null?Long.valueOf((String)reqMap.get("customerId")):0;
+		long itemId=reqMap.get("itemId")!=null?Long.valueOf((Integer)reqMap.get("itemId")):0;
+		int quantity=reqMap.get("quantity")!=null?Integer.valueOf((String)reqMap.get("quantity")):1;
+		
+		Customer customer=customerService.getCustomerById(customerId);
+		
+		Item item=productService.getItemById(itemId);
+		
+		CartItem cItem=new CartItem();
+		
+		cItem.setQuantity(quantity);
+		cItem.setTotalPriceDouble(item.getPrice()*quantity);
+		cItem.setItem(item);
+		cItem.setCart(customer.getCart());
+		
+		cartServive.saveCartItem(cItem);
+	}
+	
+	
+/*	public byte[] scale(byte[] fileData, int width, int height) {
         ByteArrayInputStream in = new ByteArrayInputStream(fileData);
         try {
             BufferedImage img = ImageIO.read(in);
@@ -244,5 +281,29 @@ public class CartController {
         	e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
-    }
+    }*/
+	
+	public byte[] scale(byte[] fileData, int width, int height) {
+		
+		try {
+			
+			ByteArrayInputStream in = new ByteArrayInputStream(fileData);
+
+			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+			
+			
+			Thumbnails.of(in).size(width,height).crop(Positions.CENTER).toOutputStream(buffer);
+			
+			return buffer.toByteArray();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			
+		    throw new RuntimeException(e.getMessage());
+		    
+		}
+		
+		
+	}
+	
 }

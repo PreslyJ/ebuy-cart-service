@@ -16,8 +16,10 @@ public class CartServiceImpl implements CartService{
 	
 	@Autowired
 	private CartRepository cartRepository;
+	
 	@Autowired
 	private CustomerOrderService customerOrderService;
+	
 	@Autowired
 	private CartItemRepository cartItemRepository;
 	
@@ -58,6 +60,10 @@ public class CartServiceImpl implements CartService{
 	
 	public void save(Cart cart){
 		cartRepository.save(cart);
+	}
+	
+	public void saveCartItem(CartItem cartItem) {
+		cartItemRepository.save(cartItem);
 	}
 
 }
