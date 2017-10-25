@@ -1,16 +1,10 @@
 package com.kidz.controller;
 
-import java.awt.Color;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.imageio.ImageIO;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,19 +19,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kidz.cart.model.Cart;
 import com.kidz.cart.model.CartItem;
 import com.kidz.cart.model.Category;
 import com.kidz.cart.model.Customer;
 import com.kidz.cart.model.Item;
-import com.kidz.cart.model.Product;
 import com.kidz.cart.model.SubCategory;
 import com.kidz.service.CartService;
 import com.kidz.service.CategoryService;
 import com.kidz.service.CustomerService;
 import com.kidz.service.ProductService;
-
 import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.geometry.Position;
 import net.coobird.thumbnailator.geometry.Positions;
 
 @RestController
@@ -56,39 +48,6 @@ public class CartController {
 	@Autowired
 	CartService cartServive;
 	
-	@RequestMapping(value="/saveProduct",method=RequestMethod.PUT)
-	@CrossOrigin
-	public Product saveProduct(@RequestBody Product product) {
-
-		productService.save(product);
-
-		return product;
-		
-	}
-
-	@RequestMapping(value="/getProductById/{productId}",method=RequestMethod.GET)
-	@CrossOrigin
-	public Product getProductById(@PathVariable Long productId) {
-
-		return productService.getProductById(productId);
-
-	}
-	
-	@RequestMapping(value="/deleteProduct/{productId}",method=RequestMethod.DELETE)
-	@CrossOrigin
-	public void deleteProduct(@PathVariable Long productId) {
-
-		productService.delete(productId);
-		
-	}
-	
-	@RequestMapping(value="/getAllProducts",method=RequestMethod.POST)
-	@CrossOrigin
-	public Page<Product> getAllProducts(Pageable pageable) {
-
-		return productService.getAllProducts(pageable,null);
-
-	}
 	
 	
 	@RequestMapping(value="/saveCategory",method=RequestMethod.PUT)
@@ -113,7 +72,10 @@ public class CartController {
 	@CrossOrigin
 	public void deleteCategory(@PathVariable Long categoryId) {
 
-		categoryService.delete(categoryId);
+		Category category=categoryService.getCategoryById(categoryId);
+		category.setStatus("Inactive");
+		
+		categoryService.save(category);
 		
 	}
 	
@@ -147,7 +109,10 @@ public class CartController {
 	@CrossOrigin
 	public void deleteSubCategory(@PathVariable Long subCategoryId) {
 
-		categoryService.deleteSubCategory(subCategoryId);
+		SubCategory subCategory=categoryService.getSubCategoryById(subCategoryId);
+		subCategory.setStatus("Inactive");
+		
+		categoryService.saveSubCategory(subCategory);
 		
 	}
 	
@@ -179,7 +144,10 @@ public class CartController {
 	@CrossOrigin
 	public void deleteItem(@PathVariable Long itemId) {
 
-		productService.deleteItem(itemId);
+		Item item=productService.getItemById(itemId);
+		item.setStatus("Inactive");
+		
+		productService.saveItem(item);
 		
 	}
 	
@@ -252,9 +220,56 @@ public class CartController {
 		cItem.setQuantity(quantity);
 		cItem.setTotalPriceDouble(item.getPrice()*quantity);
 		cItem.setItem(item);
-		cItem.setCart(customer.getCart());
+		
+		Cart cart=customer.getCart();
+		cart.setGrandTotal(item.getPrice()*quantity+cart.getGrandTotal());
+		
+		cItem.setCart(cart);
 		
 		cartServive.saveCartItem(cItem);
+	}
+
+	
+	@RequestMapping(value="/getCart",method=RequestMethod.POST)
+	@CrossOrigin
+	public Cart getcart(Pageable pageable,@RequestBody Map<String, Object> reqMap) {
+
+		long customerId=reqMap.get("customerId")!=null?Long.valueOf((String)reqMap.get("customerId")):0;
+		
+		Customer customer=customerService.getCustomerById(customerId);
+		
+		return customer.getCart();
+		
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getImgByTitleId/{itemId}", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+	public byte[] getImageByTitleId(@PathVariable long itemId,@RequestParam int width,@RequestParam int height){
+	
+		Item item=productService.getItemById(itemId);
+		 
+		return scale(item.getImage(), width, height);
+			 
+	}
+	
+	@RequestMapping(value="/removeFromcart",method=RequestMethod.POST)
+	@CrossOrigin
+	public void removeFromcart(Pageable pageable,@RequestBody Map<String, Object> reqMap) {
+
+		long customerId=reqMap.get("customerId")!=null?Long.valueOf((String)reqMap.get("customerId")):0;
+		long cartItemId=reqMap.get("cartItemId")!=null?Long.valueOf((Integer)reqMap.get("cartItemId")):0;
+		
+		Customer customer=customerService.getCustomerById(customerId);
+		
+		CartItem cartItem=cartServive.getCartItem(cartItemId);
+		
+		
+		customer.getCart().setGrandTotal(customer.getCart().getGrandTotal()-cartItem.getTotalPriceDouble());
+		
+		customerService.save(customer);
+		
+		cartServive.deleteCartItem(cartItemId);
+		
 	}
 	
 	
@@ -302,6 +317,14 @@ public class CartController {
 		    throw new RuntimeException(e.getMessage());
 		    
 		}
+		
+		
+	}
+	
+	
+	@RequestMapping(value="/purchaseItems",method=RequestMethod.POST)
+	@CrossOrigin
+	public void purchaseItems(@RequestBody Map<String, Object> reqMap){
 		
 		
 	}

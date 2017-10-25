@@ -15,4 +15,8 @@ public interface CartService {
 	
 	void saveCartItem(CartItem cartItem);
 	
+	public void deleteCartItem(long id);
+	
+	public CartItem getCartItem(long id);
+	
 }

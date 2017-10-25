@@ -32,10 +32,8 @@ public class CustomerController {
 	@CrossOrigin
 	public Customer saveCustomer(@RequestBody Customer customer) {
 		
-	if(customer.getEmail()!=null && customer.getFirstName()!=null && customer.getAccount().getPassword()!=null && !customer.getEmail().equals(""))	
-		customerService.save(customer);
-	else
-		System.out.println("noooooooooooooo");
+		if(customer.getEmail()!=null && customer.getFirstName()!=null && customer.getAccount().getPassword()!=null && !customer.getEmail().equals(""))	
+			customerService.save(customer);
 		
 		return customer;		
 	}
