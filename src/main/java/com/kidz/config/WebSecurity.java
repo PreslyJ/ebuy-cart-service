@@ -1,4 +1,5 @@
-package com.kidz.security;
+package com.kidz.config;
+
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import com.kidz.security.JWTAuthenticationFilter;
+import com.kidz.security.TokenAuthenticationService;
 
 @Configuration
 @EnableWebSecurity
@@ -43,11 +46,21 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		}else
 			httpSecurity.authorizeRequests().anyRequest().permitAll();
     		
+    	httpSecurity.cors().disable();
+    	
     	httpSecurity.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     	
     }
 
    
-    
+    /*@Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }*/
     
 }

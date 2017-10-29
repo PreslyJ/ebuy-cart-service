@@ -81,9 +81,9 @@ public class CartController {
 	
 	@RequestMapping(value="/getAllCategories",method=RequestMethod.POST)
 	@CrossOrigin
-	public Page<Category> getAllCategories(Pageable pageable) {
+	public Page<Category> getAllCategories(Pageable pageable,@RequestBody Map<String, Object> filterMap) {
 
-		return categoryService.getAllCategory(pageable,null);
+		return categoryService.getAllCategory(pageable,filterMap);
 
 	}
 	
@@ -118,9 +118,9 @@ public class CartController {
 	
 	@RequestMapping(value="/getAllSubCategories",method=RequestMethod.POST)
 	@CrossOrigin
-	public Page<SubCategory> getAllSubCategories(Pageable pageable) {
+	public Page<SubCategory> getAllSubCategories(Pageable pageable,@RequestBody Map<String, Object> filterMap) {
 				
-		return categoryService.getAllSubCategory(pageable,null);
+		return categoryService.getAllSubCategory(pageable,filterMap);
 
 	}
 	
@@ -153,9 +153,9 @@ public class CartController {
 	
 	@RequestMapping(value="/getAllItems",method=RequestMethod.POST)
 	@CrossOrigin
-	public Page<Item> getAllItems(Pageable pageable) {
+	public Page<Item> getAllItems(Pageable pageable,@RequestBody Map<String, Object> filterMap) {
 
-		return productService.getAllItems(pageable,null);
+		return productService.getAllItems(pageable,filterMap);
 
 	}
 	

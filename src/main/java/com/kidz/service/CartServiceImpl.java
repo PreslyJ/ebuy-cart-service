@@ -5,12 +5,14 @@ import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kidz.cart.model.Cart;
 import com.kidz.cart.model.CartItem;
 import com.kidz.repository.CartItemRepository;
 import com.kidz.repository.CartRepository;
 
+@Transactional
 @Service
 public class CartServiceImpl implements CartService{
 	

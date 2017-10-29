@@ -11,13 +11,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-class TokenAuthenticationService {
-  static String SECRET = "ThisIsASecret";
-  static String TOKEN_PREFIX = "Bearer";
-  static String HEADER_STRING = "Authorization";
+public class TokenAuthenticationService {
+  public static String SECRET = "ThisIsASecret";
+  public static String TOKEN_PREFIX = "Bearer";
+  public static String HEADER_STRING = "Authorization";
 
   
-  static Authentication getAuthentication(HttpServletRequest request) {
+  public static Authentication getAuthentication(HttpServletRequest request) {
     
 	String token = request.getHeader(HEADER_STRING);
 	

@@ -26,7 +26,7 @@ class ProductServiceImpl implements ProductService{
 		boolean isRecomended=filterMap.get("isRecomended")!=null?Boolean.parseBoolean( filterMap.get("isRecomended").toString()):false;
 		boolean isFeatured=filterMap.get("isFeatured")!=null?Boolean.parseBoolean( filterMap.get("isFeatured").toString()):false;
 		long subCategoryId=filterMap.get("subCategoryId")==null?0:Long.valueOf(filterMap.get("subCategoryId").toString());
-			
+		String status=filterMap.get("status")==null?null:filterMap.get("status").toString();	
 		
 		QItem item=QItem.item;
 		
@@ -40,6 +40,9 @@ class ProductServiceImpl implements ProductService{
 		
 		if(subCategoryId>0)
 			whereClause.and(item.subCategory.id.eq(subCategoryId));
+			
+		if(status!=null)
+			whereClause.and(item.status.in(status));
 			
 		return itemRepository.findAll(whereClause,pageable);
 		
