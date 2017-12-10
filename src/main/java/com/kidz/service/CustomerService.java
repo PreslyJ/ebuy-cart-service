@@ -1,6 +1,8 @@
 package com.kidz.service;
 
-import java.util.List;
+import java.util.Map;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.kidz.cart.model.Customer;
 
@@ -12,7 +14,7 @@ public interface CustomerService {
 		
 	Customer getCustomerByEmail(String email);
 		
-	List<Customer> getAllCustomer();
+	Page<Customer> getAllCustomer(Pageable pageable,Map<String, Object> filterMap);
 	
 	void delete(Long customerId);
 }

@@ -1,10 +1,12 @@
 package com.kidz.controller;
 
-import java.util.List;
+import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,17 +34,24 @@ public class CustomerController {
 	@CrossOrigin
 	public Customer saveCustomer(@RequestBody Customer customer) {
 		
-		if(customer.getEmail()!=null && customer.getFirstName()!=null && customer.getAccount().getPassword()!=null && !customer.getEmail().equals(""))	
+		if(customer.getEmail()!=null && customer.getFirstName()!=null && customer.getAccount().getPassword()!=null && !customer.getEmail().equals(""))	{
+			
+			Customer cus=customerService.getCustomerByEmail(customer.getEmail());		
+			
+			if(cus!=null)
+				throw new RuntimeException("email.inuse");
+			
 			customerService.save(customer);
-		
+			
+		}
 		return customer;		
 	}
 	
-	@RequestMapping(value="/getAllCustomer",method=RequestMethod.GET)
+	@RequestMapping(value="/getAllCustomer",method=RequestMethod.POST)
 	@CrossOrigin
-	public List<Customer> getAllCustomers() {
+	public Page<Customer> getAllCustomers(Pageable pageable,@RequestBody Map<String, Object> filterMap) {
 	
-		return customerService.getAllCustomer();		
+		return customerService.getAllCustomer(pageable, filterMap);		
 
 	}
 	

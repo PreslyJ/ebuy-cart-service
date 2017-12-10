@@ -1,7 +1,11 @@
 package com.kidz.service;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,8 +59,8 @@ public class CustomerServiceImpl implements CustomerService{
     }
     
     
-    public List<Customer> getAllCustomer(){
-    	return (List<Customer>) customerRepository.findAll();
+    public Page<Customer> getAllCustomer(Pageable pageable,Map<String, Object> filterMap){
+    	return  customerRepository.findAll(pageable);
     }
     
     public void delete(Long customerId){

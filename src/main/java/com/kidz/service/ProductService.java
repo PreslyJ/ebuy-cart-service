@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.kidz.cart.model.Item;
+import com.kidz.cart.model.StockItems;
 
 public interface ProductService {
 	
@@ -12,8 +13,12 @@ public interface ProductService {
 	
 	Item getItemById(Long itemId);
 	
-	void saveItem(Item itwm);
+	Item saveItem(Item itwm);
 	
 	void deleteItem(Long itemId);
+	
+	void saveStockItem(StockItems  stockItems);
+	
+	Page<StockItems> getAllStockItems(Pageable pageable,Map<String, Object> filterMap);
 	
 }

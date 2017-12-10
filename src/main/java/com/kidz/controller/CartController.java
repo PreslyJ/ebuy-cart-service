@@ -24,6 +24,7 @@ import com.kidz.cart.model.CartItem;
 import com.kidz.cart.model.Category;
 import com.kidz.cart.model.Customer;
 import com.kidz.cart.model.Item;
+import com.kidz.cart.model.StockItems;
 import com.kidz.cart.model.SubCategory;
 import com.kidz.service.CartService;
 import com.kidz.service.CategoryService;
@@ -126,9 +127,9 @@ public class CartController {
 	
 	@RequestMapping(value="/saveItem",method=RequestMethod.PUT)
 	@CrossOrigin
-	public void saveItem(@RequestBody Item item) {
+	public Item saveItem(@RequestBody Item item) {
 
-		productService.saveItem(item);
+		return productService.saveItem(item);
 		
 	}
 
@@ -144,11 +145,11 @@ public class CartController {
 	@CrossOrigin
 	public void deleteItem(@PathVariable Long itemId) {
 
-		Item item=productService.getItemById(itemId);
-		item.setStatus("Inactive");
+		productService.deleteItem(itemId);
+	/*	item.setStatus("Inactive");
 		
 		productService.saveItem(item);
-		
+		*/
 	}
 	
 	@RequestMapping(value="/getAllItems",method=RequestMethod.POST)
@@ -190,7 +191,7 @@ public class CartController {
 		
 		 Item item=productService.getItemById(itemId);
 		 
-		 return scale(item.getImage(), 180, 200);
+		 return scale(item.getImage(), 268, 249);
 		 
 	}
 	
@@ -298,6 +299,13 @@ public class CartController {
         }
     }*/
 	
+	
+	/**
+	 * @param fileData		byte array of image.				
+	 * @param width			The width of the image.
+	 * @param height		The height of the image.
+	 * @return				Byte stream of the resized image.
+	 */
 	public byte[] scale(byte[] fileData, int width, int height) {
 		
 		try {
@@ -306,10 +314,10 @@ public class CartController {
 
 			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 			
-			
 			Thumbnails.of(in).size(width,height).crop(Positions.CENTER).toOutputStream(buffer);
 			
 			return buffer.toByteArray();
+			
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -327,6 +335,22 @@ public class CartController {
 	public void purchaseItems(@RequestBody Map<String, Object> reqMap){
 		
 		
+	}
+	
+	@RequestMapping(value="/saveStockItem",method=RequestMethod.PUT)
+	@CrossOrigin
+	public void saveStockItem(@RequestBody StockItems item) {
+
+		productService.saveStockItem(item);
+		
+	}
+	
+	@RequestMapping(value="/getAllStockItems",method=RequestMethod.POST)
+	@CrossOrigin
+	public Page<StockItems> getAllStockItems(Pageable pageable,@RequestBody Map<String, Object> filterMap) {
+
+		return productService.getAllStockItems(pageable,filterMap);
+
 	}
 	
 }

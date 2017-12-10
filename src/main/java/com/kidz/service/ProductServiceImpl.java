@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.kidz.cart.model.Item;
 import com.kidz.cart.model.QItem;
+import com.kidz.cart.model.StockItems;
 import com.kidz.repository.ItemRepository;
+import com.kidz.repository.StockItemsReository;
 import com.querydsl.core.BooleanBuilder;
 
 @Service
@@ -18,8 +20,12 @@ class ProductServiceImpl implements ProductService{
 	@Autowired
 	private ItemRepository itemRepository;
 
+	@Autowired
+	private StockItemsReository stockItemsReository; 
+	
 	@Override
 	public Page<Item> getAllItems(Pageable pageable, Map<String, Object> filterMap) {
+
 		if(filterMap==null)
 			return itemRepository.findAll(pageable);
 		
@@ -54,12 +60,23 @@ class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public void saveItem(Item item) {
-		itemRepository.save(item);
+	public Item saveItem(Item item) {
+		return itemRepository.save(item);
 	}
 
 	@Override
 	public void deleteItem(Long itemId) {
 		itemRepository.delete(itemId);
 	}
+
+	@Override
+	public void saveStockItem(StockItems stockItems) {
+		stockItemsReository.save(stockItems);
+	}
+
+	@Override
+	public Page<StockItems> getAllStockItems(Pageable pageable, Map<String, Object> filterMap) {
+		return stockItemsReository.findAll(pageable);
+	}
+	
 }

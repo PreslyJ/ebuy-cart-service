@@ -32,16 +32,19 @@ public class RabbitMQConfig {
 	
 	@Bean
 	public Binding regbinding() {
+		// Bind the queue and exchange with routing key
 		return BindingBuilder.bind(loginQueue()).to(loginExchange()).with("login");
 	}
 	
 	@Bean
 	public RabbitTemplate serviceTemplate() {
+		
 		RabbitTemplate template = new RabbitTemplate(connectionFactory);
 
 		// convetAndSend will use thease by default
 		template.setExchange("ebuy.login.rpc.xch");
 		template.setRoutingKey("login");
+		// Timeout after 50 seconds
 		template.setReceiveTimeout(50000);
 	
 		return template;
