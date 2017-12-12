@@ -3,7 +3,9 @@ package com.kidz.controller;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,7 @@ import com.kidz.cart.model.CartItem;
 import com.kidz.cart.model.Category;
 import com.kidz.cart.model.Customer;
 import com.kidz.cart.model.Item;
+import com.kidz.cart.model.PurchasedItems;
 import com.kidz.cart.model.StockItems;
 import com.kidz.cart.model.SubCategory;
 import com.kidz.service.CartService;
@@ -333,15 +336,81 @@ public class CartController {
 	@RequestMapping(value="/purchaseItems",method=RequestMethod.POST)
 	@CrossOrigin
 	public void purchaseItems(@RequestBody Map<String, Object> reqMap){
+			
+		long customerId=reqMap.get("customerId")!=null?Long.valueOf((String)reqMap.get("customerId")):0;
 		
+		double totDeduction=0;
+		
+		Customer customer=customerService.getCustomerById(customerId);
+		
+		Cart cart=customer.getCart();
+		
+		List<CartItem> cartItems=cart.getCartItems();
+		
+		for(int i = 0; i<cartItems.size(); i++){
+			
+			CartItem cartItem=cartItems.get(i);
+			
+			Item item=cartItem.getItem();
+			
+			int quantity=item.getQuantity();
+			
+			quantity-=cartItem.getQuantity();
+			
+			if(quantity<1){
+				quantity=0;
+				item.setStatus("inactive");
+			}
+			
+			item.setQuantity(quantity);
+			
+			
+			PurchasedItems pur=new PurchasedItems();
+			
+			pur.setCustomer(customer);
+			pur.setItem(item);
+			pur.setNoOfItems(cartItem.getQuantity());
+			pur.setPurchasePrice(cartItem.getTotalPriceDouble());
+			pur.setPurchasedDate(new Date());
+			
+			productService.savePurchasedItems(pur);
+			
+			productService.saveItem(item);
+			
+			cartServive.deleteCartItem(cartItem.getId());
+
+			totDeduction+=cartItem.getTotalPriceDouble();
+			
+			cart.getCartItems().remove(i);
+		
+		}
+		
+		cart.setGrandTotal(cart.getGrandTotal()-totDeduction);
+		
+		customer.setCart(cart);
+		
+		customerService.save(customer);
 		
 	}
 	
 	@RequestMapping(value="/saveStockItem",method=RequestMethod.PUT)
 	@CrossOrigin
-	public void saveStockItem(@RequestBody StockItems item) {
+	public void saveStockItem(@RequestBody StockItems stockItem) {
 
-		productService.saveStockItem(item);
+		if(stockItem.getNoOfItems()<1 || stockItem.getItem().getId()<1)
+			return;
+		
+		Item item=productService.getItemById(stockItem.getItem().getId());
+		item.setStatus("active");
+		item.setQuantity(item.getQuantity()+stockItem.getNoOfItems());		
+		item.setLupDate(new Date());
+		
+		stockItem.setItem(item);
+		stockItem.setStatus("active");
+		stockItem.setInventryDate(new Date());
+		stockItem.setSellingPrice(item.getPrice());
+		
+		productService.saveStockItem(stockItem);
 		
 	}
 	

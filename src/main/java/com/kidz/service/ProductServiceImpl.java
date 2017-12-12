@@ -7,9 +7,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.kidz.cart.model.Item;
+import com.kidz.cart.model.PurchasedItems;
 import com.kidz.cart.model.QItem;
 import com.kidz.cart.model.StockItems;
 import com.kidz.repository.ItemRepository;
+import com.kidz.repository.PurchasedItemsRepository;
 import com.kidz.repository.StockItemsReository;
 import com.querydsl.core.BooleanBuilder;
 
@@ -22,6 +24,9 @@ class ProductServiceImpl implements ProductService{
 
 	@Autowired
 	private StockItemsReository stockItemsReository; 
+	
+	@Autowired
+	private PurchasedItemsRepository purchasedItemsRepo; 
 	
 	@Override
 	public Page<Item> getAllItems(Pageable pageable, Map<String, Object> filterMap) {
@@ -56,7 +61,7 @@ class ProductServiceImpl implements ProductService{
 
 	@Override
 	public Item getItemById(Long itemId) {
-		return itemRepository.getOne(itemId);
+		return itemRepository.findOne(itemId);
 	}
 
 	@Override
@@ -77,6 +82,11 @@ class ProductServiceImpl implements ProductService{
 	@Override
 	public Page<StockItems> getAllStockItems(Pageable pageable, Map<String, Object> filterMap) {
 		return stockItemsReository.findAll(pageable);
+	}
+
+	@Override
+	public void savePurchasedItems(PurchasedItems purchasedItems) {
+		purchasedItemsRepo.save(purchasedItems);
 	}
 	
 }
