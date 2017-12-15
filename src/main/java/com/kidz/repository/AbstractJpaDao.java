@@ -1,5 +1,6 @@
 package com.kidz.repository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -36,7 +37,7 @@ public  class AbstractJpaDao {
 	   }
 	   
 	   public  Integer findCount(String whereClause){
-		   return (Integer)entityManager.createQuery(whereClause ).getSingleResult();
+		   return ((Long)entityManager.createQuery(whereClause ).getSingleResult()).intValue();
 	   }
 	   
 	   public <T> void save( T entity ){
@@ -64,7 +65,7 @@ public  class AbstractJpaDao {
 	   
 	   
 	   public  Integer findNativeCount(String whereClause){
-		   return (Integer)entityManager.createNativeQuery(whereClause).getSingleResult();
+		   return ((BigInteger)entityManager.createNativeQuery(whereClause).getSingleResult()).intValue();
 	   }
 	 
 }

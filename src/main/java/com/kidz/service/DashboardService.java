@@ -12,9 +12,9 @@ public interface DashboardService {
 	
 	public void saveSubscription(Subscriptions subscriptions);
 	
-	public int getAvgViews(long itemId);
+	public int getAvgViews();
 	
-	public int getAvgItemPurchases(long itemId);
+	public int getAvgItemPurchases();
 	
 	public List<Map<String,Object>> findAllItems();
 	

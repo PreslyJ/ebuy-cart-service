@@ -1,5 +1,6 @@
 package com.kidz.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -34,18 +35,22 @@ public class DashboardController {
 	
 	
 	@RequestMapping(value="/getStockDetails",method=RequestMethod.GET)
-	public List<Map<String,Object>> getStockDetails() {
+	public Map<String,Object> getStockDetails() {
 		
-		return dashboardService.findAllItems();
+		Map<String,Object> map=new HashMap<>();
+		
+		map.put("content",dashboardService.findAllItems());
+		
+		return map;
 		
 	}
 
 	@RequestMapping(value="/getAvgItemPurchases",method=RequestMethod.GET)
-	public Map<String,Object> getAvgItemPurchases(@RequestParam long itemId) {
+	public Map<String,Object> getAvgItemPurchases() {
 		
 		Map<String,Object>  map=new HashMap<String, Object>();
 		
-		int avgItems= dashboardService.getAvgItemPurchases(itemId);
+		int avgItems= dashboardService.getAvgItemPurchases();
 		
 		map.put("avgItemPurchases",avgItems);
 		
@@ -54,11 +59,11 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(value="/getAvgViews",method=RequestMethod.GET)
-	public Map<String,Object> getAvgViews(@RequestParam  long itemId) {
+	public Map<String,Object> getAvgViews() {
 		
 		Map<String,Object>  map=new HashMap<String, Object>();
 		
-		int avgViews= dashboardService.getAvgViews(itemId);
+		int avgViews= dashboardService.getAvgViews();
 		
 		map.put("avgViews",avgViews);
 		

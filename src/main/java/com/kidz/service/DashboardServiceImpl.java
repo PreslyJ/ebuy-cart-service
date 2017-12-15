@@ -80,9 +80,9 @@ class DashboardServiceImpl implements DashboardService {
 		 
 	}
 
-	public int getAvgItemPurchases(long itemId) {
+	public int getAvgItemPurchases() {
 
-		 Integer stock=abstractJpaDao.findNativeCount("select sum(no_of_items)/count(distinct (purchased_date::date)) from purchased_items");
+		 Integer stock=abstractJpaDao.findNativeCount("select sum(no_of_items)/count(distinct date(purchased_date)) from purchased_items");
 	
 		 if (stock==null)
 			 stock=0;
@@ -91,9 +91,9 @@ class DashboardServiceImpl implements DashboardService {
 		 
 	}
 	
-	public int getAvgViews(long itemId) {
+	public int getAvgViews() {
 
-		 Integer view=abstractJpaDao.findNativeCount("select count(*)/count(distinct (s.date::date)) from site_views s");
+		 Integer view=abstractJpaDao.findNativeCount("select count(*)/count(distinct date(s.date)) from site_views s");
 	
 		 if (view==null)
 			 view=0;
