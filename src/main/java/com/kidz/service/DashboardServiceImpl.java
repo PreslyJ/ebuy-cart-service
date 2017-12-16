@@ -101,6 +101,12 @@ class DashboardServiceImpl implements DashboardService {
 	 	 return view;
 		 
 	}
+
+	@Override
+	public List<Subscriptions> getAllSubscriptions() {
+		return subscriptionsRepository.findAll();
+	}
+	
 	
 	
 }

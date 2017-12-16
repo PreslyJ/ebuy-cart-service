@@ -1,18 +1,21 @@
 package com.kidz.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.kidz.cart.model.Customer;
 import com.kidz.dashboard.model.SiteViews;
+import com.kidz.dashboard.model.Subscriptions;
+import com.kidz.service.CustomerService;
 import com.kidz.service.DashboardService;
 
 @RestController
@@ -21,6 +24,12 @@ public class DashboardController {
 
 	@Autowired
 	DashboardService dashboardService;
+	
+	@Autowired
+	public JavaMailSender emailSender;
+
+	@Autowired
+	CustomerService customerService;
 	
 	@RequestMapping(value="/saveSiteView",method=RequestMethod.GET)
 	public void saveCustomer(HttpServletRequest request) {
@@ -71,5 +80,48 @@ public class DashboardController {
 		
 	}
 
+	
+	@RequestMapping(value="/saveSubscription",method=RequestMethod.PUT)
+	@CrossOrigin
+	public void saveSubscription(@RequestBody Subscriptions subscription) {
+
+		dashboardService.saveSubscription(subscription);
+		
+	}
+	
+	@RequestMapping(value="/sendEmailToAllSubscribers",method=RequestMethod.POST)
+	public void sendEmail(@RequestBody Map<String,String>  map) {
+		
+		String review= map.get("msg");
+		
+		Map<String,String>  map1=new HashMap<>();
+		
+		for (Subscriptions subscription : dashboardService.getAllSubscriptions()) {
+			
+			if(map1.get(subscription.getEmail())==null){
+				SimpleMailMessage message = new SimpleMailMessage(); 
+		        message.setTo(subscription.getEmail()); 
+		        message.setSubject("Kidz Land"); 
+		        message.setText(review);
+		        emailSender.send(message);
+		        map1.put(subscription.getEmail(), "email");
+			}
+			
+		}
+		
+		for (Customer cus : customerService.getAllCustomer()) {
+			
+			if(map1.get(cus.getEmail())==null){
+				SimpleMailMessage message = new SimpleMailMessage(); 
+		        message.setTo(cus.getEmail()); 
+		        message.setSubject("Kidz Land"); 
+		        message.setText(review);
+		        emailSender.send(message);
+		        map1.put(cus.getEmail(), "email");
+			}
+			
+		}
+		
+	}
 	
 }

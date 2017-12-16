@@ -18,4 +18,6 @@ public interface DashboardService {
 	
 	public List<Map<String,Object>> findAllItems();
 	
+	public List<Subscriptions> getAllSubscriptions();
+	
 }

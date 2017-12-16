@@ -1,5 +1,6 @@
 package com.kidz.service;
 
+import java.util.List;
 import java.util.Map;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,4 +18,7 @@ public interface CustomerService {
 	Page<Customer> getAllCustomer(Pageable pageable,Map<String, Object> filterMap);
 	
 	void delete(Long customerId);
+	
+	List<Customer> getAllCustomer();
+	
 }

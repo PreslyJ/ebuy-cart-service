@@ -382,7 +382,7 @@ public class CartController {
 			totDeduction+=cartItem.getTotalPriceDouble();
 			
 			cart.getCartItems().remove(i);
-		
+			i-=1;
 		}
 		
 		cart.setGrandTotal(cart.getGrandTotal()-totDeduction);
@@ -421,5 +421,15 @@ public class CartController {
 		return productService.getAllStockItems(pageable,filterMap);
 
 	}
+	
+//	@RequestMapping(value="/saveReview",method=RequestMethod.PUT)
+//	@CrossOrigin
+//	public ProductComment saveReview(ProductComment review) {
+//
+//		productService.saveReview(review);
+//		
+//		return review;
+//		
+//	}
 	
 }

@@ -66,4 +66,9 @@ public class CustomerServiceImpl implements CustomerService{
     public void delete(Long customerId){
     	customerRepository.delete(customerId);
     }
+    
+    public List<Customer> getAllCustomer(){
+    	return  customerRepository.findAll();
+    }
+    
 }
