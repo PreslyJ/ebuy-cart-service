@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -90,21 +91,26 @@ public class DashboardController {
 	}
 	
 	@RequestMapping(value="/sendEmailToAllSubscribers",method=RequestMethod.POST)
-	public void sendEmail(@RequestBody Map<String,String>  map) {
+	public void sendEmail(@RequestBody String  review) {
 		
-		String review= map.get("msg");
-		
+/*		String review= map.get("msg");
+*/		
 		Map<String,String>  map1=new HashMap<>();
 		
 		for (Subscriptions subscription : dashboardService.getAllSubscriptions()) {
 			
 			if(map1.get(subscription.getEmail())==null){
-				SimpleMailMessage message = new SimpleMailMessage(); 
-		        message.setTo(subscription.getEmail()); 
-		        message.setSubject("Kidz Land"); 
-		        message.setText(review);
-		        emailSender.send(message);
-		        map1.put(subscription.getEmail(), "email");
+				try {
+					SimpleMailMessage message = new SimpleMailMessage(); 
+					message.setTo(subscription.getEmail()); 
+					message.setSubject("Kidz Land"); 
+					message.setText(review);
+					emailSender.send(message);
+					map1.put(subscription.getEmail(), "email");
+				} catch (MailException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		}
@@ -112,12 +118,17 @@ public class DashboardController {
 		for (Customer cus : customerService.getAllCustomer()) {
 			
 			if(map1.get(cus.getEmail())==null){
-				SimpleMailMessage message = new SimpleMailMessage(); 
-		        message.setTo(cus.getEmail()); 
-		        message.setSubject("Kidz Land"); 
-		        message.setText(review);
-		        emailSender.send(message);
-		        map1.put(cus.getEmail(), "email");
+				try {
+					SimpleMailMessage message = new SimpleMailMessage(); 
+					message.setTo(cus.getEmail()); 
+					message.setSubject("Kidz Land"); 
+					message.setText(review);
+					emailSender.send(message);
+					map1.put(cus.getEmail(), "email");
+				} catch (MailException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 		}

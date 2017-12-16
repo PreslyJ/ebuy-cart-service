@@ -41,12 +41,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     		.antMatchers(HttpMethod.GET, "/health").permitAll();
 
     	if(securityEnabled==1){
-    		httpSecurity.
+    		/*httpSecurity.
     		authorizeRequests()
     		.antMatchers("/getAllCustomer").fullyAuthenticated()
     		.antMatchers("/getStockDetails").fullyAuthenticated()
     		.antMatchers("/getAvgItemPurchases").fullyAuthenticated()
-    		.antMatchers("/getAvgViews").fullyAuthenticated();
+    		.antMatchers("/getAvgViews").fullyAuthenticated();*/
     		
 			httpSecurity.authorizeRequests().anyRequest().permitAll();
 			httpSecurity.addFilterBefore(new JWTAuthenticationFilter(),UsernamePasswordAuthenticationFilter.class);

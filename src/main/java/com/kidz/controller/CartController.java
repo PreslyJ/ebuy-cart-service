@@ -131,7 +131,10 @@ public class CartController {
 	@RequestMapping(value="/saveItem",method=RequestMethod.PUT)
 	@CrossOrigin
 	public Item saveItem(@RequestBody Item item) {
-
+		
+		if(item.getQuantity()<1)
+			item.setStatus("inactive");
+			
 		return productService.saveItem(item);
 		
 	}
@@ -147,12 +150,13 @@ public class CartController {
 	@RequestMapping(value="/deleteItem/{itemId}",method=RequestMethod.DELETE)
 	@CrossOrigin
 	public void deleteItem(@PathVariable Long itemId) {
-
-		productService.deleteItem(itemId);
-	/*	item.setStatus("Inactive");
+	
+		Item item=productService.getItemById(itemId);
+		//productService.deleteItem(itemId);
+		item.setStatus("Inactive");
 		
 		productService.saveItem(item);
-		*/
+		
 	}
 	
 	@RequestMapping(value="/getAllItems",method=RequestMethod.POST)
