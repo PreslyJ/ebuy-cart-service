@@ -48,12 +48,13 @@ class DashboardServiceImpl implements DashboardService {
 		 
 		for (Item item : items) {
 		
-			Map<String,Object> map=new HashMap<>();
-			map.put("item",item.getName());
-			map.put("purchased",getPurchasedStock(item.getId()));
-			map.put("stocks",getStockIn(item.getId()));
-			
-			mapList.add(map);
+				Map<String,Object> map=new HashMap<>();
+				map.put("item",item.getName());
+				map.put("purchased",getPurchasedStock(item.getId()));
+				map.put("stocks",getStockIn(item.getId()));
+				
+				mapList.add(map);
+		
 			
 		}
 		 
@@ -63,18 +64,22 @@ class DashboardServiceImpl implements DashboardService {
 	
 	public int getPurchasedStock(long itemId) {
 		
-		Integer purchases= abstractJpaDao.findCount("SELECT count(e.noOfItems) from PurchasedItems e where  e.item.id="+itemId);
+		try {
+			Integer purchases= abstractJpaDao.findCount("SELECT sum(e.noOfItems) from PurchasedItems e where  e.item.id="+itemId);
 
-		if(purchases==null)
-			 purchases=0;
+			if(purchases==null)
+				 purchases=0;
 
-		return  purchases;
+			return  purchases;
+		} catch (Exception e) {
+			return 0;
+		}
 	
 	}
 
 	public int getStockIn(long itemId) {
 
-		 Integer stock=abstractJpaDao.findCount("SELECT count(e.noOfItems) from StockItems e where  e.item.id="+itemId);
+		 Integer stock=abstractJpaDao.findCount("SELECT sum(e.noOfItems) from StockItems e where  e.item.id="+itemId);
 	
 		 if (stock==null)
 			 stock=0;
